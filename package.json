@@ -14,13 +14,14 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
+    "preview": "npm run build && wrangler dev",
     "dev:electron": "cross-env ELECTRON_DEV=true concurrently -k \"vite\" \"wait-on tcp:3000 && electron .\"",
     "dev:electron:dist": "cross-env ELECTRON_DEV=false ELECTRON=true ELECTRON_LINUX_PACKAGED_GRAPHICS=true vite build && electron .",
     "dev:electron:dist:swiftshader": "cross-env ELECTRON_DEV=false ELECTRON=true ELECTRON_LINUX_PACKAGED_GRAPHICS=true FOLIA_LINUX_GRAPHICS_MODE=swiftshader vite build && electron .",
     "dev:electron:dist:software": "cross-env ELECTRON_DEV=false ELECTRON=true ELECTRON_LINUX_PACKAGED_GRAPHICS=true FOLIA_LINUX_GRAPHICS_MODE=software vite build && electron .",
     "build:electron:dir": "cross-env ELECTRON_DEV=false ELECTRON=true vite build && electron-builder --linux dir",
-    "build:electron": "cross-env ELECTRON_DEV=false ELECTRON=true vite build && electron-builder"
+    "build:electron": "cross-env ELECTRON_DEV=false ELECTRON=true vite build && electron-builder",
+    "deploy": "npm run build && wrangler deploy"
   },
   "build": {
     "appId": "top.izuna.foliamajor",
@@ -92,6 +93,7 @@
     "react-window": "^2.2.7"
   },
   "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.30.3",
     "@tailwindcss/postcss": "^4.1.17",
     "@types/blueimp-md5": "^2.18.2",
     "@types/node": "^22.14.0",
@@ -107,6 +109,7 @@
     "typescript": "~5.8.2",
     "vite": "^6.2.0",
     "vite-plugin-pwa": "^1.2.0",
-    "wait-on": "^9.0.4"
+    "wait-on": "^9.0.4",
+    "wrangler": "^4.79.0"
   }
 }
