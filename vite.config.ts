@@ -6,6 +6,8 @@ import { VitePWA } from 'vite-plugin-pwa';
 import { execSync } from 'child_process';
 import fs from 'fs';
 
+import { cloudflare } from "@cloudflare/vite-plugin";
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig(async ({ mode }) => {
@@ -62,32 +64,29 @@ export default defineConfig(async ({ mode }) => {
       port: 3000,
       host: '0.0.0.0',
     },
-    plugins: [
-      react(),
-      VitePWA({
-        registerType: 'autoUpdate',
-        includeAssets: ['icon.svg'],
-        devOptions: {
-          enabled: true
-        },
-        manifest: {
-          name: 'Folia Music',
-          short_name: 'Folia',
-          description: 'A beautiful AI-themed music player',
-          theme_color: '#09090b',
-          background_color: '#09090b',
-          display: 'standalone',
-          icons: [
-            {
-              src: 'icon.svg',
-              sizes: '512x512',
-              type: 'image/svg+xml',
-              purpose: 'any maskable'
-            }
-          ]
-        }
-      })
-    ],
+    plugins: [react(), VitePWA({
+      registerType: 'autoUpdate',
+      includeAssets: ['icon.svg'],
+      devOptions: {
+        enabled: true
+      },
+      manifest: {
+        name: 'Folia Music',
+        short_name: 'Folia',
+        description: 'A beautiful AI-themed music player',
+        theme_color: '#09090b',
+        background_color: '#09090b',
+        display: 'standalone',
+        icons: [
+          {
+            src: 'icon.svg',
+            sizes: '512x512',
+            type: 'image/svg+xml',
+            purpose: 'any maskable'
+          }
+        ]
+      }
+    }), cloudflare()],
     define: {
       'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
       'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
